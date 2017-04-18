@@ -31,8 +31,16 @@ end
 liczba_trafien=0;
 for i=1:50
     if (funkcje_celu(i)~=0)
-        samochody(i)
         liczba_trafien=liczba_trafien+1;
     end
 end
 liczba_trafien
+pasujace_samochody=cell(liczba_trafien,1);
+j=0;
+for i=1:50
+    if (funkcje_celu(i)~=0)
+        j=j+1;
+        pasujace_samochody(j)=samochody(i);
+    end
+end
+pasujace_samochody
