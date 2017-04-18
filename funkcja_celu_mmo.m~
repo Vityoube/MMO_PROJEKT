@@ -1,0 +1,25 @@
+filedata='MMO.xlsx';
+sheet=1;
+xlRange='B2:H51';
+[num,text,raw]=xlsread(filedata,sheet,xlRange);
+
+moc=raw(1:50,1);
+silnik=raw(1:50,3);
+predkosc=raw(1:50,4);
+bagaznik=raw(1:50,6);
+miejsca=raw(1:50,2);
+rok=raw(1:50,5);
+rejestracja=raw(1:50,7);
+
+A=[];
+for i=1:50
+   j=0
+   if i~=1
+      if silnik(i)<3
+        if moc(i)<200 && predkosc<200
+            j=j+1;
+            A(j)=moc(i)+silnik(i)+bagaznik(i)+predkosc(i)+miejsca(i)+rok(i)+rejestracja(i)
+        end
+      end
+   end
+end

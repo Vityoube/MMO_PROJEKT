@@ -1,0 +1,4 @@
+filedata='MMO.xlsx';
+sheet=1;
+xlRange='B2:H51';
+funkcje_celu=xlsread(filedata,sheet,xlRange)
