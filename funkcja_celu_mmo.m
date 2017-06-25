@@ -340,4 +340,73 @@ samochody(1)
 % Odnalezienie optymalnego zestawu cech
 disp('Odnalezienie optymalnego zestawu cech');
 
+cechy=zeros(7,50);
+for i=1:50
+    cechy(1,i)=moc_funkcja(i);
+    cechy(2,i)=silnik_funkcja(i);
+    cechy(3,i)=predkosc_funkcja(i);
+    cechy(4,i)=bagaznik_funkcja(i);
+    cechy(5,i)=miejsca_funkcja(i);
+    cechy(6,i)=rok_funkcja(i);
+    cechy(7,i)=rejestracja_funkcja(i);
+end
 
+
+funkcje_zestawy=zeros(7,50);
+for ilosc_cech=1:7    
+    for bierzacy_samochod=1:50
+        if bierzacy_samochod~=1
+            for bierzaca_cecha=1:ilosc_cech
+                funkcje_zestawy(ilosc_cech,bierzacy_samochod)=funkcje_zestawy(ilosc_cech,bierzacy_samochod)+waga*cechy(bierzaca_cecha,bierzacy_samochod);
+            end
+             funkcje_zestawy(ilosc_cech,bierzacy_samochod)=funkcje_zestawy(ilosc_cech,bierzacy_samochod)/ilosc_cech;
+        end        
+    end
+end
+disp('Zestawy cech dlakażdego samochodu');
+funkcje_zestawy
+
+wzorzec_zestawy=zeros(1,50);
+for ilosc_cech=1:7   
+    for bierzaca_cecha=1:ilosc_cech
+        wzorzec_zestawy(ilosc_cech)= wzorzec_zestawy(ilosc_cech)+cechy(bierzaca_cecha,1);
+    end
+end
+
+disp('Zestawy cech dla wzorca');
+wzorzec_zestawy
+
+odleglosci_w_zestawach=zeros(7,50);
+
+granica_odleglosci=0.1;
+fprintf('Dozwolona granica %d\n',granica_odleglosci);
+
+for bierzacy_zestaw=1:7
+    for bierzacy_samochod=1:50
+        if bierzacy_samochod~=1
+            for bierzaca_cecha=1:bierzacy_zestaw
+                odleglosci_w_zestawach(bierzacy_zestaw,bierzacy_samochod)=odleglosci_w_zestawach(bierzacy_zestaw,bierzacy_samochod)+(cechy(bierzaca_cecha,bierzacy_samochod)-cechy(bierzaca_cecha,1))*(cechy(bierzaca_cecha,bierzacy_samochod)-cechy(bierzaca_cecha,1));
+            end
+            odleglosci_w_zestawach(bierzacy_zestaw,bierzacy_samochod)=sqrt(odleglosci_w_zestawach(bierzacy_zestaw,bierzacy_samochod));
+            if odleglosci_w_zestawach(bierzacy_zestaw,bierzacy_samochod)>granica_odleglosci
+                odleglosci_w_zestawach(bierzacy_zestaw,bierzacy_samochod)=999;
+            else 
+                 odleglosci_w_zestawach(bierzacy_zestaw,bierzacy_samochod)
+            end
+        else
+            odleglosci_w_zestawach(bierzacy_zestaw,bierzacy_samochod)=999;
+        end        
+    end
+end
+
+min_odleglosci=zeros(7);
+
+for i=1:7
+    min_odleglosci(i)=min(odleglosci_w_zestawach(i));
+end
+
+min_odleglosci
+
+optymalny_zestaw=min(min_odleglosci);
+
+fprint('Optymalna ilosc cech: %d\n',optymalny_zestaw);
